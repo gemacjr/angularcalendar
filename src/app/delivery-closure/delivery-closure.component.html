@@ -1,0 +1,81 @@
+<div class="container">
+    <div class="row">
+      <div class="col-md-3">
+      <a href="#"><span class="glyphicon glyphicon-menu-left" aria-hidden="false"></span></a>
+      </div>
+      <div class="col-md-3 col-md-offset-3">
+      <a href="#"><span class="glyphicon glyphicon-menu-right" aria-hidden="false"></span></a>
+    </div>
+    </div>
+    
+    <div class="row">
+     
+      
+      <div class="col-lg-4">
+        <h3 style="text-align: center;">JAN</h3>
+        <table >
+          <tr>
+            <th *ngFor="let column of days">
+  
+            </th>
+          </tr>
+          <tr *ngFor="let row of dayOfWeekJan">
+            <td *ngFor="let column of days; let i = index;">
+             
+              <app-date-button 
+                [isPassed]="row[column].isPast" 
+                [isSelected]="row[column].isSelected" 
+                [isDefault]="row[column].isDefault" 
+                [dayOfWeek]="column" 
+                [dayOfMonth]="row[column].dateNumber"></app-date-button>
+           
+            </td>
+  
+          </tr>
+        </table>
+      </div>
+      <div class="col-lg-4">
+        <h3 style="text-align: center;">FEB</h3>
+        <table>
+          <tr>
+            <th *ngFor="let column of days">
+  
+            </th>
+          </tr>
+          <tr *ngFor="let row of dayOfWeekFeb">
+            <td *ngFor="let column of days; let i = index;">
+                <app-date-button 
+                [isPassed]="row[column].isPast" 
+                [isSelected]="row[column].isSelected"
+                [isDefault]="row[column].isDefault" 
+                [dayOfWeek]="column" 
+                [dayOfMonth]="row[column].dateNumber" ></app-date-button>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="col-md-4">
+        <h3 style="text-align: center;">MAR</h3>
+        <table>
+          <tr>
+            <th *ngFor="let column of days">
+  
+            </th>
+          </tr>
+          <tr *ngFor="let row of dayOfWeekFeb">
+            <td *ngFor="let column of days; let i = index;">
+                <app-date-button 
+                [isPassed]="row[column].isPast" 
+                [isSelected]="row[column].isSelected"
+                [isDefault]="row[column].isDefault"
+                [dayOfWeek]="column" 
+                [dayOfMonth]="row[column].dateNumber" ></app-date-button>
+            </td>
+  
+          </tr>
+        </table>
+      </div>
+     
+    </div>
+  
+  </div>
