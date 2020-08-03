@@ -21,7 +21,7 @@
           </tr>
           <tr *ngFor="let row of dayOfWeekJan">
             <td *ngFor="let column of days; let i = index;">
-             
+            
               <app-date-button 
                 [isPassed]="row[column].isPast" 
                 [isSelected]="row[column].isSelected" 

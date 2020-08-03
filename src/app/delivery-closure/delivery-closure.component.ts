@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import * as moment from "moment";
+import * as Holidays from "date-holidays";
 
 @Component({
   selector: 'app-delivery-closure',
@@ -17,26 +18,10 @@ export class DeliveryClosureComponent implements OnInit {
 
   dayOfWeekFeb = [
     {
-      "SUN": {
-        "dateNumber": '',
-        "isSelected":  false,
-        "isDefault": true,
-        "isPast": true
-      },
-      "MON": {
-        "dateNumber": '',
-        "isSelected": false,
-        "isDefault": false,
-        "isPast": true
-      },
-      "TUE": {
-        "dateNumber": '',
-        "isSelected": false,
-        "isDefault": false,
-        "isPast": true
-      },
-      "WED": {
-        "dateNumber": '1',
+      "SUN": {"dateNumber": '',"isSelected":  false,"isDefault": true,"isPast": true},
+      "MON": {"dateNumber": '',"isSelected": false,"isDefault": false,"isPast": true},
+      "TUE": {"dateNumber": '',"isSelected": false,"isDefault": false, "isPast": true},
+      "WED": {"dateNumber": '1',
         "isSelected":  true,
         "isDefault": false,
         "isPast": true
@@ -463,11 +448,17 @@ export class DeliveryClosureComponent implements OnInit {
 
   ]
 
- 
+ displayPreviousMonth = [];
+ displayCurrentMonth = [];
+ displayNextMonth = [];
 
 
   ngOnInit() {
     const dayOfWeek = new Date("08-01-2020").getDay();
+
+    let hd = new Holidays();
+    hd.init('US');
+    console.log("Theses are the Holidays" + JSON.stringify(hd.getHolidays(2020)));
 
     // Monday '1' and Sunday '7'
     // const date = moment("08-01-2020"); // Thursday Feb 2015
@@ -486,6 +477,16 @@ export class DeliveryClosureComponent implements OnInit {
     //1st month is previuosMonth, currentMonth, nextMonth arrsy for display
 
   }
+
+  // 1. display month based on currrent day and 14 days minus
+  // 2. displayPrevoiusMonth[], displayCurrentMonth[], displayNextMonth[]
+  // 3. generate the 3 months for display
+  // 4. getCurrentDate is in displayPrevoiusMonth[], currentDate +1 is in displayCurrentMonth[], currentDate + 1
+
+  // Arrow month selection
+  // 1. get current month arrays -> displayPrevoiusMonth[], displayCurrentMonth[], displayNextMonth[]
+  // 2. If arrow left - 1 month, If arrow right + 1 month
+
   public getNumberOfDaysFromCurrentDate(dateProvided) {
 
     let holidayDays = ["01/01/2020", "05/25/2020", "07/04/2020", "09/07/2020", "11/26/2020", "12/25/2020"]
@@ -515,9 +516,9 @@ export class DeliveryClosureComponent implements OnInit {
     });
 
 
-  // trackDays(index: number, el:any): number {
-  //   return el.id;
-  // }
+  trackDays(index: number, el:any): number {
+    return el.id;
+  }
 }
 }
 
@@ -532,25 +533,65 @@ function buildCalendar(year){
 }
 
 function buildDayPref(month, year){
+let dateNumber;
+let isSelected;
+let isDefault;
+let isPast;
+
+let currentMonth = month;
+let startDateOfMonth; //What day does the first of the month
+let numberOfDaysInMonth;
   
- month = [
+ let monthBuilder = [
     {
-      
-
+      "SUN": { "dateNumber": dateNumber, "isSelected": isSelected, "isDefault": isDefault, "isPast": isPast},
+      "MON": { "dateNumber": dateNumber, "isSelected": isSelected, "isDefault": isDefault, "isPast": isPast},
+      "TUE": { "dateNumber": dateNumber, "isSelected": isSelected, "isDefault": isDefault, "isPast": isPast},
+      "WED": { "dateNumber": dateNumber, "isSelected": isSelected, "isDefault": isDefault, "isPast": isPast},
+      "THU": { "dateNumber": dateNumber, "isSelected": isSelected, "isDefault": isDefault, "isPast": isPast},
+      "FRI": { "dateNumber": dateNumber, "isSelected": isSelected, "isDefault": isDefault, "isPast": isPast},
+      "SAT": { "dateNumber": dateNumber, "isSelected": isSelected, "isDefault": isDefault, "isPast": isPast}
     },
     {
-
+      "SUN": { "dateNumber": dateNumber, "isSelected": isSelected, "isDefault": isDefault, "isPast": isPast},
+      "MON": { "dateNumber": dateNumber, "isSelected": isSelected, "isDefault": isDefault, "isPast": isPast},
+      "TUE": { "dateNumber": dateNumber, "isSelected": isSelected, "isDefault": isDefault, "isPast": isPast},
+      "WED": { "dateNumber": dateNumber, "isSelected": isSelected, "isDefault": isDefault, "isPast": isPast},
+      "THU": { "dateNumber": dateNumber, "isSelected": isSelected, "isDefault": isDefault, "isPast": isPast},
+      "FRI": { "dateNumber": dateNumber, "isSelected": isSelected, "isDefault": isDefault, "isPast": isPast},
+      "SAT": { "dateNumber": dateNumber, "isSelected": isSelected, "isDefault": isDefault, "isPast": isPast}
     },
     {
-
+      "SUN": { "dateNumber": dateNumber, "isSelected": isSelected, "isDefault": isDefault, "isPast": isPast},
+      "MON": { "dateNumber": dateNumber, "isSelected": isSelected, "isDefault": isDefault, "isPast": isPast},
+      "TUE": { "dateNumber": dateNumber, "isSelected": isSelected, "isDefault": isDefault, "isPast": isPast},
+      "WED": { "dateNumber": dateNumber, "isSelected": isSelected, "isDefault": isDefault, "isPast": isPast},
+      "THU": { "dateNumber": dateNumber, "isSelected": isSelected, "isDefault": isDefault, "isPast": isPast},
+      "FRI": { "dateNumber": dateNumber, "isSelected": isSelected, "isDefault": isDefault, "isPast": isPast},
+      "SAT": { "dateNumber": dateNumber, "isSelected": isSelected, "isDefault": isDefault, "isPast": isPast}
     },
     {
-
+      "SUN": { "dateNumber": dateNumber, "isSelected": isSelected, "isDefault": isDefault, "isPast": isPast},
+      "MON": { "dateNumber": dateNumber, "isSelected": isSelected, "isDefault": isDefault, "isPast": isPast},
+      "TUE": { "dateNumber": dateNumber, "isSelected": isSelected, "isDefault": isDefault, "isPast": isPast},
+      "WED": { "dateNumber": dateNumber, "isSelected": isSelected, "isDefault": isDefault, "isPast": isPast},
+      "THU": { "dateNumber": dateNumber, "isSelected": isSelected, "isDefault": isDefault, "isPast": isPast},
+      "FRI": { "dateNumber": dateNumber, "isSelected": isSelected, "isDefault": isDefault, "isPast": isPast},
+      "SAT": { "dateNumber": dateNumber, "isSelected": isSelected, "isDefault": isDefault, "isPast": isPast}
     },
     {
-
-    }
+      "SUN": { "dateNumber": dateNumber, "isSelected": isSelected, "isDefault": isDefault, "isPast": isPast},
+      "MON": { "dateNumber": dateNumber, "isSelected": isSelected, "isDefault": isDefault, "isPast": isPast},
+      "TUE": { "dateNumber": dateNumber, "isSelected": isSelected, "isDefault": isDefault, "isPast": isPast},
+      "WED": { "dateNumber": dateNumber, "isSelected": isSelected, "isDefault": isDefault, "isPast": isPast},
+      "THU": { "dateNumber": dateNumber, "isSelected": isSelected, "isDefault": isDefault, "isPast": isPast},
+      "FRI": { "dateNumber": dateNumber, "isSelected": isSelected, "isDefault": isDefault, "isPast": isPast},
+      "SAT": { "dateNumber": dateNumber, "isSelected": isSelected, "isDefault": isDefault, "isPast": isPast}
+    },
+    
   ]
+
+  return monthBuilder;
 
 }
 
