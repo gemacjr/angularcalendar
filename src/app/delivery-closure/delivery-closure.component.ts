@@ -516,9 +516,9 @@ export class DeliveryClosureComponent implements OnInit {
     });
 
 
-  trackDays(index: number, el:any): number {
-    return el.id;
-  }
+  // trackDays(index: number, el:any): number {
+  //   return el.id;
+  // }
 }
 }
 
